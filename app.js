@@ -353,5 +353,13 @@ function initWebUsageChecker() {
       btnCheck.textContent = 'Check Account Status';
     }
   });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const checkEmail = urlParams.get('checkEmail');
+  if (checkEmail && inputEmail) {
+    inputEmail.value = checkEmail;
+    modal?.classList.remove('hidden');
+    btnCheck?.click();
+  }
 }
 

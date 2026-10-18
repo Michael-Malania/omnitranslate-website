@@ -279,7 +279,7 @@
     </div>
 
     <!-- Main Checkout Section -->
-    <div class="checkout-grid">
+    <div class="checkout-grid" id="checkoutGrid">
       
       <!-- Left Column: Plan Selection & Email -->
       <div class="checkout-card">
@@ -422,6 +422,49 @@
 
     </div>
 
+    <!-- Success Confirmation Section (Shown on successful checkout) -->
+    <div id="checkoutSuccessView" class="checkout-card" style="display:none; text-align:center; padding: 48px 32px; max-width:680px; margin: 20px auto; border-color: rgba(0, 245, 212, 0.4); box-shadow: 0 10px 40px rgba(0, 245, 212, 0.15);">
+      <div style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%; background: radial-gradient(circle, rgba(0,245,212,0.25) 0%, rgba(0,245,212,0.05) 70%); border: 2px solid var(--secondary-teal); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(0,245,212,0.4);">
+        <span style="font-size: 38px;">🎉</span>
+      </div>
+
+      <span class="section-tag" style="margin-bottom: 12px; display:inline-block;">License Active</span>
+      <h1 style="font-size: 28px; font-weight: 800; color: #FFF; margin: 8px 0;">
+        Payment Successful &amp; Pro Activated!
+      </h1>
+      <p style="color: var(--text-secondary); font-size: 15px; max-width: 500px; margin: 0 auto 24px; line-height: 1.5;">
+        Thank you for subscribing to OmniTranslate Live! Your account now has unrestricted access to unlimited sub-second speech translation and virtual mic routing.
+      </p>
+
+      <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-border); border-radius: var(--radius-md); padding: 20px; text-align: left; margin-bottom: 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px;">
+          <span style="font-size: 13px; color: var(--text-muted);">Account Email:</span>
+          <strong id="successUserEmail" style="color: #FFF; font-size: 14px;">-</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px;">
+          <span style="font-size: 13px; color: var(--text-muted);">Subscription Plan:</span>
+          <span id="successPlanName" style="background: rgba(0,245,212,0.15); border: 1px solid rgba(0,245,212,0.3); color: var(--secondary-teal); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;">PRO CLOUD</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 10px;">
+          <span style="font-size: 13px; color: var(--text-muted);">Quota Limits:</span>
+          <span style="color: #00F5D4; font-weight: 700; font-size: 13px;">Unlimited Live Audio</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size: 13px; color: var(--text-muted);">Virtual Audio Cable:</span>
+          <span style="color: #FFF; font-size: 13px;">Unlocked (Zoom &amp; Teams)</span>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="/" id="btnCheckStatus" class="btn-checkout-submit" style="text-decoration:none; margin-top:0;">
+          ⚡ Check Account Status on Web
+        </a>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin: 6px 0 0;">
+          💡 Open your <strong>OmniTranslate Desktop App</strong> and sign in with the email above. Your unlimited Pro license will activate automatically!
+        </p>
+      </div>
+    </div>
+
     <!-- Compliance Footer Links (Required by Paddle) -->
     <div style="margin-top:60px; padding-top:24px; border-top:1px solid var(--surface-border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:12px; color:var(--text-muted);">
       <div>&copy; 2026 OmniTranslate Technologies. All rights reserved.</div>
@@ -438,13 +481,9 @@
   <!-- Paddle.js Integration -->
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
   <script>
-    // Initialize Paddle Billing in Sandbox
-    if (window.Paddle) {
-      Paddle.Environment.set('sandbox');
-      Paddle.Initialize({
-        token: 'test_0b40e4632c5d21a994305fb61af'
-      });
-    }
+    const BACKEND_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:5050'
+      : 'https://omnitranslate-backend.onrender.com';
 
     let currentPlan = 'annual';
     const optAnnual = document.getElementById('optAnnual');
@@ -452,10 +491,28 @@
     const btnPriceLabel = document.getElementById('btnPriceLabel');
     const checkoutEmailInput = document.getElementById('checkoutEmail');
 
+    // Initialize Paddle Billing in Sandbox
+    if (window.Paddle) {
+      Paddle.Environment.set('sandbox');
+      Paddle.Initialize({
+        token: 'test_0b40e4632c5d21a994305fb61af',
+        eventCallback: function(data) {
+          console.log('⚡ [Paddle Event]:', data?.name, data);
+          if (data && data.name === 'checkout.completed') {
+            const customerEmail = data.data?.customer?.email || checkoutEmailInput.value.trim();
+            const txnId = data.data?.id;
+            handleSuccessfulCheckout(customerEmail, currentPlan, txnId);
+          }
+        }
+      });
+    }
+
     // Auto-fill email if passed in query string: ?email=user@example.com&plan=annual
     const urlParams = new URLSearchParams(window.location.search);
     const emailParam = urlParams.get('email');
     const planParam = urlParams.get('plan');
+    const ptxnParam = urlParams.get('_ptxn');
+    const statusParam = urlParams.get('status');
 
     if (emailParam) {
       checkoutEmailInput.value = emailParam;
@@ -465,6 +522,11 @@
       selectPlan('monthly');
     } else {
       selectPlan('annual');
+    }
+
+    // Check if returning from a successful transaction (via _ptxn or status=success)
+    if (statusParam === 'success' || ptxnParam) {
+      handleSuccessfulCheckout(emailParam || '', planParam || 'annual', ptxnParam);
     }
 
     optAnnual.addEventListener('click', () => selectPlan('annual'));
@@ -487,6 +549,59 @@
       }
     }
 
+    async function handleSuccessfulCheckout(email, plan, txnId) {
+      console.log('🎉 Checkout successful callback received:', { email, plan, txnId });
+
+      // Close Paddle modal if open
+      if (window.Paddle && window.Paddle.Checkout && typeof window.Paddle.Checkout.close === 'function') {
+        try { window.Paddle.Checkout.close(); } catch(e){}
+      }
+
+      // Hide checkout form and reveal success view
+      const grid = document.getElementById('checkoutGrid');
+      const successView = document.getElementById('checkoutSuccessView');
+      if (grid) grid.style.display = 'none';
+      if (successView) successView.style.display = 'block';
+
+      if (email) {
+        const emailEl = document.getElementById('successUserEmail');
+        if (emailEl) emailEl.textContent = email;
+        const btnStatus = document.getElementById('btnCheckStatus');
+        if (btnStatus) btnStatus.href = `/?checkEmail=${encodeURIComponent(email)}#status`;
+      }
+
+      const planEl = document.getElementById('successPlanName');
+      if (planEl) {
+        planEl.textContent = plan === 'monthly' ? 'PRO CLOUD - MONTHLY' : 'PRO CLOUD - ANNUAL';
+      }
+
+      // Update URL silently so refresh keeps success state
+      try {
+        const newUrl = `${window.location.origin}${window.location.pathname}?status=success&email=${encodeURIComponent(email || '')}&plan=${encodeURIComponent(plan || 'annual')}`;
+        window.history.replaceState({ status: 'success' }, '', newUrl);
+      } catch (e) {}
+
+      // Notify backend to instantly verify and upgrade user
+      try {
+        if (txnId) {
+          const verifyRes = await fetch(`${BACKEND_URL}/api/paddle/verify-transaction?txnId=${encodeURIComponent(txnId)}&email=${encodeURIComponent(email || '')}`);
+          const verifyData = await verifyRes.json();
+          if (verifyData && verifyData.email && (!email || !email.includes('@'))) {
+            const emailEl = document.getElementById('successUserEmail');
+            if (emailEl) emailEl.textContent = verifyData.email;
+          }
+        } else if (email) {
+          await fetch(`${BACKEND_URL}/api/user/upgrade`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, tier: 'pro', source: 'paddle_checkout' })
+          });
+        }
+      } catch (err) {
+        console.warn('Backend upgrade sync error:', err);
+      }
+    }
+
     document.getElementById('btnProceedCheckout').addEventListener('click', () => {
       const email = checkoutEmailInput.value.trim();
       if (!email || !email.includes('@')) {
@@ -495,6 +610,9 @@
         return;
       }
 
+      const priceId = currentPlan === 'annual' ? 'pri_01m56kwezn0khbvq2njpmyyadb' : 'pri_01m56kv3qd1harb3f4c6xsxtwg';
+      const successUrl = `${window.location.origin}${window.location.pathname}?status=success&email=${encodeURIComponent(email)}&plan=${encodeURIComponent(currentPlan)}`;
+
       // If Paddle.js is initialized with live token:
       if (window.Paddle && window.Paddle.Checkout) {
         try {
@@ -502,15 +620,19 @@
             settings: {
               displayMode: 'overlay',
               theme: 'dark',
-              locale: 'en'
+              locale: 'en',
+              successUrl: successUrl
             },
             customer: {
               email: email
             },
+            customData: {
+              email: email,
+              plan: currentPlan
+            },
             items: [
               {
-                // Real Paddle Price ID created in Paddle Sandbox
-                priceId: currentPlan === 'annual' ? 'pri_01m56kwezn0khbvq2njpmyyadb' : 'pri_01m56kv3qd1harb3f4c6xsxtwg',
+                priceId: priceId,
                 quantity: 1
               }
             ]
@@ -521,7 +643,7 @@
         }
       }
 
-      // Friendly fallback alert if Paddle token is still in setup
+      // Fallback
       alert(`Proceeding to Paddle Checkout for OmniTranslate Pro (${currentPlan === 'annual' ? '$79/year' : '$9.99/month'}) for ${email}.`);
     });
   </script>
