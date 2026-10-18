@@ -128,19 +128,12 @@ function initPricingToggle() {
   document.getElementById('btnUpgradeToProPricing')?.addEventListener('click', (e) => {
     e.preventDefault();
     const plan = isAnnual ? 'annual' : 'monthly';
-    const user = window.OmniAuth?.getUser();
+    const user = window.OmniAuth ? window.OmniAuth.getUser() : null;
 
     if (user && user.email) {
       window.location.href = `checkout.html?plan=${plan}&email=${encodeURIComponent(user.email)}`;
     } else {
-      window.OmniAuth?.openModal({
-        title: 'Upgrade to Pro Cloud',
-        subtitle: 'Please sign in or create an account to activate your subscription.',
-        defaultTab: 'signin',
-        onSuccess: (authedUser) => {
-          window.location.href = `checkout.html?plan=${plan}&email=${encodeURIComponent(authedUser.email)}`;
-        }
-      });
+      window.location.href = `checkout.html?plan=${plan}&authRequired=true`;
     }
   });
 }

@@ -694,3 +694,9 @@ const OmniAuth = (() => {
     getBackendUrl: () => BACKEND_URL
   };
 })();
+
+// Explicitly bind to global window
+if (typeof window !== 'undefined') {
+  window.OmniAuth = OmniAuth;
+}
+

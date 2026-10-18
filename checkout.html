@@ -608,10 +608,23 @@
         if (unauthBox) unauthBox.style.display = 'block';
         if (authedBox) authedBox.style.display = 'none';
 
-        btnProceed.disabled = true;
-        btnProceed.style.opacity = '0.55';
-        btnProceed.style.cursor = 'not-allowed';
-        btnProceed.innerHTML = '<span>🔒 Sign In or Register to Unlock Checkout</span>';
+        btnProceed.disabled = false;
+        btnProceed.style.opacity = '1';
+        btnProceed.style.cursor = 'pointer';
+        btnProceed.innerHTML = '<span>🔒 Click to Sign In &amp; Continue</span>';
+
+        // Auto-prompt sign-in modal if user is not logged in
+        if (urlParams.get('authRequired') === 'true' || !sessionStorage.getItem('omni_checkout_auth_prompted')) {
+          sessionStorage.setItem('omni_checkout_auth_prompted', 'true');
+          setTimeout(() => {
+            window.OmniAuth?.openModal({
+              title: 'Sign In Required for Pro',
+              subtitle: 'You need to be logged into your account to access Pro checkout and activate your license.',
+              defaultTab: 'signin',
+              onSuccess: renderAuthState
+            });
+          }, 300);
+        }
       }
     }
 
