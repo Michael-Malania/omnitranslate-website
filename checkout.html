@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniTranslate Live - Secure Checkout &amp; Pro Upgrade</title>
+  <meta name="description" content="Upgrade to OmniTranslate Live Pro Cloud. Unlimited sub-second speech translation, Gemini AI Flash Live, Virtual Audio Cable, and dynamic AI voice cloning.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .checkout-container {
+      max-width: 1000px;
+      margin: 40px auto 80px;
+      padding: 0 24px;
+    }
+
+    .checkout-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0 40px;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkout-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .plan-selector-box {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .plan-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border: 2px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      background: var(--surface-inner);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .plan-option:hover {
+      border-color: rgba(56, 117, 246, 0.5);
+      background: rgba(56, 117, 246, 0.05);
+    }
+
+    .plan-option.selected {
+      border-color: var(--secondary-teal);
+      background: rgba(0, 210, 180, 0.08);
+      box-shadow: 0 0 20px rgba(0, 210, 180, 0.2);
+    }
+
+    .plan-radio-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .plan-radio {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--secondary-teal);
+    }
+
+    .plan-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .plan-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .plan-price-tag {
+      text-align: right;
+    }
+
+    .plan-price-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFF;
+      font-family: var(--font-display);
+    }
+
+    .plan-price-period {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .save-pill {
+      background: rgba(0, 210, 180, 0.2);
+      border: 1px solid var(--secondary-teal);
+      color: var(--secondary-teal);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 8px;
+    }
+
+    .checkout-input-group {
+      margin-top: 20px;
+    }
+
+    .checkout-input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .checkout-input {
+      width: 100%;
+      background: rgba(10, 13, 18, 0.8);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: #FFF;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .checkout-input:focus {
+      border-color: var(--secondary-teal);
+      box-shadow: 0 0 15px rgba(0, 210, 180, 0.2);
+    }
+
+    .btn-checkout-submit {
+      width: 100%;
+      background: var(--primary-gradient);
+      border: none;
+      color: #070B14;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 10px 25px rgba(0, 210, 180, 0.35);
+    }
+
+    .btn-checkout-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 210, 180, 0.5);
+    }
+
+    .trust-badges {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .trust-item {
+      text-align: center;
+    }
+
+    .trust-icon {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .trust-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .trust-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .summary-feature-list {
+      list-style: none;
+      margin-top: 18px;
+    }
+
+    .summary-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .summary-feature-item svg {
+      color: var(--secondary-teal);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .payment-methods-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 16px;
+      opacity: 0.75;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mor-notice {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-top: 20px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-container">
+    
+    <!-- Top Navigation -->
+    <div class="checkout-nav">
+      <a href="/" class="brand" style="text-decoration:none;">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+          </svg>
+        </div>
+        <span>OmniTranslate Live</span>
+      </a>
+
+      <a href="/" class="btn btn-glass btn-sm">← Back to Overview</a>
+    </div>
+
+    <!-- Main Checkout Section -->
+    <div class="checkout-grid">
+      
+      <!-- Left Column: Plan Selection & Email -->
+      <div class="checkout-card">
+        <span class="section-tag">Instant Activation</span>
+        <h1 style="font-size:26px; font-weight:800; color:#FFF; margin-top:8px;">
+          Upgrade to OmniTranslate Pro
+        </h1>
+        <p style="color:var(--text-secondary); font-size:14px; margin-top:6px;">
+          Unlock sub-second AI speech translation, virtual mic driver for Zoom &amp; Teams, and unlimited high-speed quota.
+        </p>
+
+        <!-- Plan Selection -->
+        <div class="plan-selector-box">
+          
+          <!-- Option 1: Annual -->
+          <label class="plan-option selected" id="optAnnual">
+            <div class="plan-radio-row">
+              <input type="radio" name="plan" value="annual" class="plan-radio" checked>
+              <div>
+                <div style="display:flex; align-items:center;">
+                  <span class="plan-title">Pro Cloud - Annual</span>
+                  <span class="save-pill">Save 34%</span>
+                </div>
+                <div class="plan-subtitle">Billed $79.00 once per year ($6.58 / month equivalent)</div>
+              </div>
+            </div>
+            <div class="plan-price-tag">
+              <div class="plan-price-val">$79</div>
+              <div class="plan-price-period">/ year</div>
+            </div>
+          </label>
+
+          <!-- Option 2: Monthly -->
+          <label class="plan-option" id="optMonthly">
+            <div class="plan-radio-row">
+              <input type="radio" name="plan" value="monthly" class="plan-radio">
+              <div>
+                <span class="plan-title">Pro Cloud - Monthly</span>
+                <div class="plan-subtitle">Flexible month-to-month subscription. Cancel anytime.</div>
+              </div>
+            </div>
+            <div class="plan-price-tag">
+              <div class="plan-price-val">$9.99</div>
+              <div class="plan-price-period">/ month</div>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- Account Email -->
+        <div class="checkout-input-group">
+          <label for="checkoutEmail">Your OmniTranslate Account Email (for instant license link)</label>
+          <input type="email" id="checkoutEmail" class="checkout-input" placeholder="e.g. yourname@gmail.com" required>
+          <small style="color:var(--text-muted); font-size:11.5px; display:block; margin-top:6px;">
+            Your Pro license will automatically activate on Desktop, Mobile, and Web using this email.
+          </small>
+        </div>
+
+        <!-- Checkout Action Button -->
+        <button id="btnProceedCheckout" class="btn-checkout-submit">
+          <span>🔒 Proceed to Secure Checkout</span>
+          <span id="btnPriceLabel">($79.00 / yr)</span>
+        </button>
+
+        <!-- Payment Brands -->
+        <div class="payment-methods-row">
+          <span>💳 Credit Card</span>
+          <span>•</span>
+          <span>🅿️ PayPal</span>
+          <span>•</span>
+          <span>🍏 Apple Pay</span>
+          <span>•</span>
+          <span>Google Pay</span>
+        </div>
+
+        <!-- Merchant of Record Disclosure (Paddle Compliance Requirement) -->
+        <div class="mor-notice">
+          <strong>Merchant of Record:</strong> Our order process is conducted by our online reseller and Merchant of Record, <strong>Paddle.com Market Ltd</strong>, who also handles order-related inquiries and returns. Your payment is 256-bit SSL encrypted.
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary & Guarantee -->
+      <div class="checkout-card">
+        <h3 style="font-size:18px; font-weight:700; color:#FFF; margin-bottom:12px;">What's Included in Pro:</h3>
+        
+        <ul class="summary-feature-list">
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Unlimited Audio Translation</strong>: No 15-translation trial restrictions.</span>
+          </li>
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Gemini 2.5 Flash Lite Live</strong>: Sub-500ms neural streaming pipeline.</span>
+          </li>
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Virtual Audio Driver</strong>: Broadcast translated voice directly into Zoom, Teams, Meet &amp; Discord.</span>
+          </li>
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Dynamic AI Voice Synthesis</strong>: Real-time gender &amp; timbre adaptation.</span>
+          </li>
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Multi-Platform Access</strong>: Windows, macOS, Android &amp; Web synchronized.</span>
+          </li>
+          <li class="summary-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Priority AI Cluster</strong>: 99.9% uptime with zero queue throttling.</span>
+          </li>
+        </ul>
+
+        <!-- Trust & Guarantee Grid -->
+        <div class="trust-badges">
+          <div class="trust-item">
+            <div class="trust-icon">🛡️</div>
+            <div class="trust-title">14-Day Refund</div>
+            <div class="trust-desc">Full 100% money-back guarantee</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">⚡</div>
+            <div class="trust-title">Instant Setup</div>
+            <div class="trust-desc">Active immediately after purchase</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon">✕</div>
+            <div class="trust-title">Cancel Anytime</div>
+            <div class="trust-desc">1-click cancellation with 0 hassle</div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px; padding:16px; background:rgba(56, 117, 246, 0.08); border:1px solid rgba(56, 117, 246, 0.25); border-radius:var(--radius-sm);">
+          <div style="font-size:12px; font-weight:700; color:#B2C5FF; margin-bottom:4px;">Need Assistance or Invoice?</div>
+          <p style="font-size:11.5px; color:var(--text-secondary); margin:0;">
+            Our support team is available at <a href="mailto:support@omnitranslate.live" style="color:var(--secondary-teal); text-decoration:none;">support@omnitranslate.live</a> for billing inquiries and custom VAT invoices.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Compliance Footer Links (Required by Paddle) -->
+    <div style="margin-top:60px; padding-top:24px; border-top:1px solid var(--surface-border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:12px; color:var(--text-muted);">
+      <div>&copy; 2026 OmniTranslate Technologies. All rights reserved.</div>
+      <div style="display:flex; gap:20px;">
+        <a href="terms.html" style="color:var(--text-secondary); text-decoration:none;">Terms of Service</a>
+        <a href="privacy.html" style="color:var(--text-secondary); text-decoration:none;">Privacy Policy</a>
+        <a href="refund.html" style="color:var(--text-secondary); text-decoration:none;">Refund Policy</a>
+        <a href="mailto:support@omnitranslate.live" style="color:var(--text-secondary); text-decoration:none;">Contact Support</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Paddle.js Integration -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script>
+    // Initialize Paddle Billing
+    // Replace with your Paddle Client-side Token when ready:
+    // Paddle.Environment.set('sandbox'); // or 'production'
+    // Paddle.Initialize({ token: 'YOUR_PADDLE_CLIENT_TOKEN' });
+
+    let currentPlan = 'annual';
+    const optAnnual = document.getElementById('optAnnual');
+    const optMonthly = document.getElementById('optMonthly');
+    const btnPriceLabel = document.getElementById('btnPriceLabel');
+    const checkoutEmailInput = document.getElementById('checkoutEmail');
+
+    // Auto-fill email if passed in query string: ?email=user@example.com&plan=annual
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    const planParam = urlParams.get('plan');
+
+    if (emailParam) {
+      checkoutEmailInput.value = emailParam;
+    }
+
+    if (planParam === 'monthly') {
+      selectPlan('monthly');
+    } else {
+      selectPlan('annual');
+    }
+
+    optAnnual.addEventListener('click', () => selectPlan('annual'));
+    optMonthly.addEventListener('click', () => selectPlan('monthly'));
+
+    function selectPlan(plan) {
+      currentPlan = plan;
+      if (plan === 'annual') {
+        optAnnual.classList.add('selected');
+        optAnnual.querySelector('input').checked = true;
+        optMonthly.classList.remove('selected');
+        optMonthly.querySelector('input').checked = false;
+        btnPriceLabel.textContent = '($79.00 / yr)';
+      } else {
+        optMonthly.classList.add('selected');
+        optMonthly.querySelector('input').checked = true;
+        optAnnual.classList.remove('selected');
+        optAnnual.querySelector('input').checked = false;
+        btnPriceLabel.textContent = '($9.99 / mo)';
+      }
+    }
+
+    document.getElementById('btnProceedCheckout').addEventListener('click', () => {
+      const email = checkoutEmailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Please enter your account email to proceed with checkout.');
+        checkoutEmailInput.focus();
+        return;
+      }
+
+      // If Paddle.js is initialized with live token:
+      if (window.Paddle && window.Paddle.Checkout) {
+        try {
+          window.Paddle.Checkout.open({
+            settings: {
+              displayMode: 'overlay',
+              theme: 'dark',
+              locale: 'en'
+            },
+            customer: {
+              email: email
+            },
+            items: [
+              {
+                // Paddle Price ID (configurable in Paddle dashboard)
+                priceId: currentPlan === 'annual' ? 'pri_pro_annual_79' : 'pri_pro_monthly_999',
+                quantity: 1
+              }
+            ]
+          });
+          return;
+        } catch (e) {
+          console.warn('Paddle.js checkout fallback:', e);
+        }
+      }
+
+      // Friendly fallback alert if Paddle token is still in setup
+      alert(`Proceeding to Paddle Checkout for OmniTranslate Pro (${currentPlan === 'annual' ? '$79/year' : '$9.99/month'}) for ${email}. Once your Paddle Client Token is entered, this opens the Paddle payment modal!`);
+    });
+  </script>
+</body>
+</html>
