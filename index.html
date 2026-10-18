@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniTranslate Live — Next-Gen AI Audio &amp; Voice Translator</title>
+  <meta name="description" content="Real-time streaming speech and system audio translator for Mobile (iOS &amp; Android) and Desktop (Windows &amp; Mac). Powered by Gemini AI with dynamic speaker voice timbre.">
+  <meta name="keywords" content="AI translator, real-time speech translation, floating subtitle overlay, system audio capture, YouTube translator, Zoom live translation, virtual microphone">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="OmniTranslate Live — Real-Time Voice &amp; Media Audio Translator">
+  <meta property="og:description" content="Translates YouTube, TikTok, Telegram voice notes, and Zoom/Meet calls with sub-second Gemini AI speech-to-speech.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="brand-icon-box">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M2 12h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H2v-8Z"/>
+            <path d="M6 16a6 6 0 0 1 12 0"/>
+            <path d="M20 12h2v8h-2a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Z"/>
+            <path d="M12 4v4"/>
+            <path d="M8 8v4"/>
+            <path d="M16 8v4"/>
+          </svg>
+        </div>
+        <span>OmniTranslate</span>
+        <span class="brand-badge">LIVE AI</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#playground" class="nav-link">Interactive Demo</a></li>
+        <li><a href="#platforms" class="nav-link">Platforms</a></li>
+        <li><a href="#pricing" class="nav-link">Pricing</a></li>
+        <li><a href="#downloads" class="nav-link">Downloads</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#downloads" class="btn btn-primary btn-sm">Get App</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      
+      <!-- Left Column: Copy & Actions -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="live-dot"></span>
+          <span>Next-Gen Streaming Translation • Mobile &amp; Desktop</span>
+        </div>
+
+        <h1 class="hero-title">
+          Translate Any Live Voice or Video <span class="gradient-text">In Real Time.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Watch YouTube, TikTok, or attend Zoom &amp; Teams calls in any foreign language. OmniTranslate captures internal system audio and spoken speech, translating it instantly with dynamic male &amp; female voice timbres.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#downloads" class="btn btn-primary btn-lg">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.61 1.34-.55.63-.99 1.68-.86 2.7.99.08 2.02-.51 2.55-1.19"/>
+            </svg>
+            Download for iOS
+          </a>
+
+          <a href="#downloads" class="btn btn-glass btn-lg">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3.609 1.814L13.792 12 3.61 22.186a2.167 2.167 0 0 1-.61-.954V2.768c.112-.375.32-.71.61-.954m11.603 11.604l2.58 2.58-12.016 6.94 9.436-9.52m2.58-2.58l3.197 1.848c.954.55.954 1.45 0 2.002l-3.197 1.848-2.58-2.58 2.58-2.58m-2.58-2.58L5.776.732 17.792 7.67l-2.58 2.588"/>
+            </svg>
+            Get on Android
+          </a>
+
+          <a href="#downloads" class="btn btn-glass btn-lg">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.551H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.849"/>
+            </svg>
+            Windows Desktop
+          </a>
+        </div>
+
+        <div class="hero-trust-badges">
+          <div class="trust-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Hardware Loopback Audio</span>
+          </div>
+          <div class="trust-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            <span>Sub-100ms Gemini AI Stream</span>
+          </div>
+          <div class="trust-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+            </svg>
+            <span>Dual Voice Gender Timbre</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Frosted Phone & Desktop Visual Mockup -->
+      <div class="hero-visual-wrapper">
+        
+        <!-- Mobile Phone Mockup -->
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-island"></div>
+
+            <!-- Top Dashboard Bar -->
+            <div class="phone-top-bar">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <svg width="16" height="16" fill="none" stroke="#00D2B4" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M12 2v20M17 5v14M7 9v6M22 10v4M2 10v4"/>
+                </svg>
+                <span style="font-size:12px; font-weight:700;">OmniTranslate</span>
+              </div>
+              <span class="phone-hud-pill">Cloud AI</span>
+            </div>
+
+            <!-- Floating Hero Translation HUD -->
+            <div class="glass-card phone-hero-hud">
+              <div class="phone-hud-header">
+                <span style="font-size:9px; font-weight:700; color:#00D2B4; display:flex; align-items:center; gap:4px;">
+                  <span class="live-dot" style="width:5px; height:5px;"></span>
+                  LIVE ENGINE ACTIVE
+                </span>
+                <span style="font-size:9px; color:#B2C5FF; font-weight:600;">Phone Speaker</span>
+              </div>
+
+              <!-- Language Switcher Row -->
+              <div class="phone-lang-row">
+                <div class="phone-lang-box">
+                  <div class="label">Input</div>
+                  <div class="val">Georgian</div>
+                </div>
+
+                <div class="phone-swap-btn">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="m16 3 4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16"/>
+                  </svg>
+                </div>
+
+                <div class="phone-lang-box">
+                  <div class="label">Translate</div>
+                  <div class="val">Russian</div>
+                </div>
+              </div>
+
+              <button class="phone-btn-start">Start Floating Translator</button>
+            </div>
+
+            <!-- Floating Overlay Subtitle Card -->
+            <div class="mockup-floating-bubble">
+              <div class="mockup-sub-header">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:9px; font-weight:800; color:#00D2B4;">GE ➔ RU</span>
+                  <div class="audio-waves-anim">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                  </div>
+                </div>
+                <span style="font-size:9px; color:#FEE75C; font-weight:700;">[Male Voice]</span>
+              </div>
+
+              <div class="sub-original">სალამი, როგორ მიდის ახალი პროექტი?</div>
+              <div class="sub-translated">Привет, как продвигается новый проект?</div>
+            </div>
+
+            <!-- Saved Session Preview Strip -->
+            <div class="glass-card" style="padding:10px; margin-top:auto;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:10px; color:#9BA3AF;">Vault Sessions</span>
+                <span style="font-size:11px; font-weight:700; color:#00D2B4;">12 Recorded</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Desktop Native HUD Card (Attached Behind Phone) -->
+        <div class="desktop-backdrop-card">
+          <div class="desktop-hud-title">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="hud-call-badge">Zoom / Google Meet</span>
+              <span style="font-size:11px; color:#00D2B4; font-weight:700;">Virtual Cable Active</span>
+            </div>
+            <span class="hud-mode-pill">MIC ⇄ SYS</span>
+          </div>
+
+          <div style="font-size:11px; color:#9BA3AF; margin-bottom:4px;">Incoming Call Audio (English):</div>
+          <div style="font-size:13px; font-weight:600; color:#FFF; margin-bottom:8px;">"We'll deploy the new release this evening across all servers."</div>
+          
+          <div style="font-size:11px; color:#00D2B4; margin-bottom:4px;">Real-Time Voice in Headphones (Russian):</div>
+          <div style="font-size:14px; font-weight:700; color:#FFF;">"Мы развернем новый релиз сегодня вечером на всех серверах."</div>
+
+          <div class="desktop-hud-controls">
+            <span style="font-size:10px; color:#9BA3AF;">Raw Voice Pass-Through:</span>
+            <span style="font-size:10px; font-weight:700; color:#00D2B4;">AUTO-UNMUTED</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Live Translation Playground -->
+  <section id="playground" class="playground-section">
+    <div class="section-header">
+      <span class="section-tag">Interactive Simulation</span>
+      <h2 class="section-title">See OmniTranslate In Action</h2>
+      <p class="section-desc">Experience how our sub-second Gemini AI pipeline translates spoken audio with dynamic male and female pitch detection.</p>
+    </div>
+
+    <div class="glass-card playground-box">
+      <div class="playground-controls">
+        <div class="scenario-chips">
+          <button class="scenario-chip active" data-scenario="youtube">YouTube Tech Review</button>
+          <button class="scenario-chip" data-scenario="telegram">Telegram Voice Note</button>
+          <button class="scenario-chip" data-scenario="meeting">Zoom Business Meeting</button>
+          <button class="scenario-chip" data-scenario="tiktok">TikTok Street Video</button>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700;">
+          <span id="playgroundSourceLang" style="color:#B2C5FF;">English</span>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          <span id="playgroundTargetLang" style="color:#00D2B4;">Russian</span>
+        </div>
+      </div>
+
+      <div class="playground-viewport">
+        <div class="stream-segment">
+          <div class="stream-tag" id="playgroundTag">
+            [M] Internal System Audio Capture (YouTube) • Male Voice (Gemini AI)
+          </div>
+          <div class="stream-original" id="playgroundOriginal">
+            "The newly engineered neural architecture cuts model latency down to sub-100 milliseconds, allowing completely fluid speech translation."
+          </div>
+          <div class="stream-translated" id="playgroundTranslated">
+            "Новая нейросетевая архитектура сокращает задержку модели до уровня менее ста миллисекунд, обеспечивая абсолютно плавный голосовой перевод."
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform Features Section -->
+  <section id="features" class="features-section" style="padding: 60px 0 90px;">
+    <div class="section-header">
+      <span class="section-tag">Cross-Platform Innovation</span>
+      <h2 class="section-title">Engineered For Zero Friction</h2>
+      <p class="section-desc">Whether you are watching reels on your phone or leading a international video conference on your PC, OmniTranslate adapts seamlessly.</p>
+    </div>
+
+    <!-- Platform Toggle Nav -->
+    <div class="platform-tabs-nav" id="platforms">
+      <button class="platform-tab-btn active" data-platform="all">All Features</button>
+      <button class="platform-tab-btn" data-platform="mobile">Mobile App (iOS &amp; Android)</button>
+      <button class="platform-tab-btn" data-platform="desktop">Desktop App (Windows/Mac)</button>
+    </div>
+
+    <!-- Dynamic Features Grid -->
+    <div class="features-grid" id="featuresGrid">
+      <!-- Populated dynamically by app.js -->
+    </div>
+  </section>
+
+  <!-- Transparent Pricing Section -->
+  <section id="pricing" class="pricing-section">
+    <div class="section-header">
+      <span class="section-tag">Simple &amp; Transparent</span>
+      <h2 class="section-title">Choose Your Translation Power</h2>
+      <p class="section-desc">Unlock unlimited real-time streaming, high-quota Gemini AI models, and virtual microphone audio routing.</p>
+    </div>
+
+    <div class="billing-toggle">
+      <span>Monthly Billing</span>
+      <div class="toggle-switch annual" id="pricingToggle">
+        <div class="toggle-knob"></div>
+      </div>
+      <span>Annual Billing</span>
+      <span class="save-badge">SAVE 30%</span>
+    </div>
+
+    <div class="pricing-grid">
+      
+      <!-- Tier 1: Free Starter -->
+      <div class="glass-card pricing-card">
+        <h3 class="tier-name">Free Starter</h3>
+        <p class="tier-desc">Essential live text translation for casual browsing &amp; short video clips.</p>
+
+        <div class="price-row">
+          <span class="price-amount">$0</span>
+          <span class="price-period">/ forever</span>
+        </div>
+
+        <ul class="tier-features">
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Real-time on-screen subtitle HUD</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>15 core translation languages</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Standard speech synthesis</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Local Vault (up to 5 saved sessions)</span>
+          </li>
+        </ul>
+
+        <a href="#downloads" class="btn btn-glass" style="width:100%;">Get Free Version</a>
+      </div>
+
+      <!-- Tier 2: Pro Cloud (Featured) -->
+      <div class="glass-card pricing-card featured">
+        <span class="popular-tag">Most Popular</span>
+        <h3 class="tier-name">Pro Cloud</h3>
+        <p class="tier-desc">Unlimited sub-second speech translation with dynamic AI voice cloning.</p>
+
+        <div class="price-row">
+          <span class="price-amount" id="proPrice">$6.99</span>
+          <span class="price-period" id="proPeriod">/ month (billed $79 annually)</span>
+        </div>
+
+        <ul class="tier-features">
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Unlimited</strong> streaming audio translation</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Gemini AI Flash</strong> high-quota neural engine</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Dynamic Gender Voice Timbre</strong> (Male &amp; Female)</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Internal System Audio Capture</strong> (YouTube, TikTok)</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Virtual Audio Cable Driver</strong> (Zoom, Meet, Discord)</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Unlimited Encrypted Vault</strong> &amp; transcript export</span>
+          </li>
+        </ul>
+
+        <a href="#downloads" class="btn btn-primary" style="width:100%;">Start Pro 7-Day Trial</a>
+      </div>
+
+      <!-- Tier 3: Team & Enterprise -->
+      <div class="glass-card pricing-card">
+        <h3 class="tier-name">Team &amp; Enterprise</h3>
+        <p class="tier-desc">Dedicated infrastructure for multi-language enterprise calls and remote teams.</p>
+
+        <div class="price-row">
+          <span class="price-amount" id="entPrice">$22.00</span>
+          <span class="price-period" id="entPeriod">/ user / mo (billed annually)</span>
+        </div>
+
+        <ul class="tier-features">
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Everything included in Pro Cloud</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Custom API Keys &amp; dedicated cluster</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Centralized billing &amp; seat management</span>
+          </li>
+          <li class="tier-feature-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Priority 24/7 dedicated enterprise support</span>
+          </li>
+        </ul>
+
+        <a href="mailto:support@omnitranslate.live" class="btn btn-glass" style="width:100%;">Contact Sales</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Download Hub & Store Badges -->
+  <section id="downloads" class="downloads-section">
+    <div class="glass-card downloads-box">
+      <span class="section-tag">Install Everywhere</span>
+      <h2 class="section-title">Get OmniTranslate Live Today</h2>
+      <p class="section-desc">Download on mobile for on-the-go video and voice note translation, or install our desktop native client for seamless meeting calls.</p>
+
+      <div class="store-buttons-grid">
+        
+        <!-- Apple App Store -->
+        <a href="https://apple.com" target="_blank" rel="noopener" class="store-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.61 1.34-.55.63-.99 1.68-.86 2.7.99.08 2.02-.51 2.55-1.19"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="subtext">Download on the</div>
+            <div class="maintext">Apple App Store</div>
+          </div>
+        </a>
+
+        <!-- Google Play -->
+        <a href="https://play.google.com" target="_blank" rel="noopener" class="store-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3.609 1.814L13.792 12 3.61 22.186a2.167 2.167 0 0 1-.61-.954V2.768c.112-.375.32-.71.61-.954m11.603 11.604l2.58 2.58-12.016 6.94 9.436-9.52m2.58-2.58l3.197 1.848c.954.55.954 1.45 0 2.002l-3.197 1.848-2.58-2.58 2.58-2.58m-2.58-2.58L5.776.732 17.792 7.67l-2.58 2.588"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="subtext">Get it on</div>
+            <div class="maintext">Google Play</div>
+          </div>
+        </a>
+
+        <!-- Direct APK Download -->
+        <a href="https://github.com/Michael-Malania/translateMe" target="_blank" rel="noopener" class="store-btn">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" x2="12" y1="15" y2="3"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="subtext">Android Mobile</div>
+            <div class="maintext">Download APK</div>
+          </div>
+        </a>
+
+        <!-- Windows Desktop App -->
+        <a href="https://github.com/Michael-Malania/omnitranslate-desktop" target="_blank" rel="noopener" class="store-btn">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.551H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.849"/>
+          </svg>
+          <div class="store-btn-text">
+            <div class="subtext">Desktop Native</div>
+            <div class="maintext">Windows x64</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="brand-logo">
+        <div class="brand-icon-box" style="width:28px; height:28px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M2 12h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H2v-8Z"/>
+            <path d="M6 16a6 6 0 0 1 12 0"/>
+            <path d="M20 12h2v8h-2a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Z"/>
+          </svg>
+        </div>
+        <span>OmniTranslate Live</span>
+      </div>
+
+      <div class="footer-meta">
+        &copy; 2026 OmniTranslate Technologies. All rights reserved. Zero-latency AI streaming.
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="https://github.com/Michael-Malania/translateMe" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#downloads">Install</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
