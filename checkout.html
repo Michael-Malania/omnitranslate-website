@@ -438,10 +438,13 @@
   <!-- Paddle.js Integration -->
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
   <script>
-    // Initialize Paddle Billing
-    // Replace with your Paddle Client-side Token when ready:
-    // Paddle.Environment.set('sandbox'); // or 'production'
-    // Paddle.Initialize({ token: 'YOUR_PADDLE_CLIENT_TOKEN' });
+    // Initialize Paddle Billing in Sandbox
+    if (window.Paddle) {
+      Paddle.Environment.set('sandbox');
+      Paddle.Initialize({
+        token: 'test_0b40e4632c5d21a994305fb61af'
+      });
+    }
 
     let currentPlan = 'annual';
     const optAnnual = document.getElementById('optAnnual');
@@ -506,8 +509,8 @@
             },
             items: [
               {
-                // Paddle Price ID (configurable in Paddle dashboard)
-                priceId: currentPlan === 'annual' ? 'pri_pro_annual_79' : 'pri_pro_monthly_999',
+                // Real Paddle Price ID created in Paddle Sandbox
+                priceId: currentPlan === 'annual' ? 'pri_01m56kwezn0khbvq2njpmyyadb' : 'pri_01m56kv3qd1harb3f4c6xsxtwg',
                 quantity: 1
               }
             ]
@@ -519,7 +522,7 @@
       }
 
       // Friendly fallback alert if Paddle token is still in setup
-      alert(`Proceeding to Paddle Checkout for OmniTranslate Pro (${currentPlan === 'annual' ? '$79/year' : '$9.99/month'}) for ${email}. Once your Paddle Client Token is entered, this opens the Paddle payment modal!`);
+      alert(`Proceeding to Paddle Checkout for OmniTranslate Pro (${currentPlan === 'annual' ? '$79/year' : '$9.99/month'}) for ${email}.`);
     });
   </script>
 </body>
