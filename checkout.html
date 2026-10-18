@@ -329,13 +329,43 @@
 
         </div>
 
-        <!-- Account Email -->
-        <div class="checkout-input-group">
-          <label for="checkoutEmail">Your OmniTranslate Account Email (for instant license link)</label>
-          <input type="email" id="checkoutEmail" class="checkout-input" placeholder="e.g. yourname@gmail.com" required>
-          <small style="color:var(--text-muted); font-size:11.5px; display:block; margin-top:6px;">
-            Your Pro license will automatically activate on Desktop, Mobile, and Web using this email.
-          </small>
+        <!-- Authentication Guard Box -->
+        <div id="checkoutUnauthBox" style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.2); border-radius: var(--radius-md); padding: 22px; text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 26px; margin-bottom: 6px;">👤</div>
+          <h4 style="font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 4px;">Sign In or Create Account Required</h4>
+          <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4;">
+            To upgrade, please sign in or register so your unlimited Pro license connects directly to your user account.
+          </p>
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button type="button" id="btnCheckoutOpenSignIn" class="btn btn-primary btn-sm" style="font-weight: 700; padding: 10px 18px; border-radius: 8px;">
+              🔑 Sign In
+            </button>
+            <button type="button" id="btnCheckoutOpenRegister" class="btn btn-glass btn-sm" style="font-weight: 700; padding: 10px 18px; border-radius: 8px;">
+              ✨ Create Free Account
+            </button>
+          </div>
+        </div>
+
+        <div id="checkoutAuthedBox" style="display:none; background: rgba(0, 210, 180, 0.06); border: 1px solid rgba(0, 210, 180, 0.3); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(0, 210, 180, 0.15); border: 1.5px solid var(--secondary-teal); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #00D2B4; flex-shrink: 0;">
+                ✓
+              </div>
+              <div style="min-width: 0;">
+                <div style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--secondary-teal); font-weight: 800;">Verified Account</div>
+                <div id="checkoutAuthedName" style="font-size: 14.5px; font-weight: 700; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+                <div id="checkoutAuthedEmail" style="font-size: 12.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+              </div>
+            </div>
+            <button type="button" id="btnCheckoutSwitchAccount" style="background: transparent; border: none; color: #9BA3AF; font-size: 11.5px; text-decoration: underline; cursor: pointer; padding: 4px; flex-shrink: 0;">
+              Switch
+            </button>
+          </div>
+
+          <div id="checkoutAlreadyProNotice" style="display:none; margin-top: 12px; padding: 10px 12px; background: rgba(254, 231, 92, 0.1); border: 1px solid rgba(254, 231, 92, 0.3); border-radius: 8px; font-size: 12px; color: #FEE75C; line-height: 1.4;">
+            👑 <strong>Active Pro Detected:</strong> This account already has an active Pro Cloud subscription!
+          </div>
         </div>
 
         <!-- Checkout Action Button -->
@@ -478,7 +508,8 @@
 
   </div>
 
-  <!-- Paddle.js Integration -->
+  <!-- Authentication & Paddle.js Integration -->
+  <script src="auth.js"></script>
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
   <script>
     const BACKEND_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
@@ -489,7 +520,13 @@
     const optAnnual = document.getElementById('optAnnual');
     const optMonthly = document.getElementById('optMonthly');
     const btnPriceLabel = document.getElementById('btnPriceLabel');
-    const checkoutEmailInput = document.getElementById('checkoutEmail');
+    const btnProceed = document.getElementById('btnProceedCheckout');
+
+    const unauthBox = document.getElementById('checkoutUnauthBox');
+    const authedBox = document.getElementById('checkoutAuthedBox');
+    const authedName = document.getElementById('checkoutAuthedName');
+    const authedEmail = document.getElementById('checkoutAuthedEmail');
+    const alreadyProNotice = document.getElementById('checkoutAlreadyProNotice');
 
     // Initialize Paddle Billing in Sandbox
     if (window.Paddle) {
@@ -499,7 +536,8 @@
         eventCallback: function(data) {
           console.log('⚡ [Paddle Event]:', data?.name, data);
           if (data && data.name === 'checkout.completed') {
-            const customerEmail = data.data?.customer?.email || checkoutEmailInput.value.trim();
+            const authedUser = window.OmniAuth?.getUser();
+            const customerEmail = data.data?.customer?.email || (authedUser ? authedUser.email : '');
             const txnId = data.data?.id;
             handleSuccessfulCheckout(customerEmail, currentPlan, txnId);
           }
@@ -507,16 +545,12 @@
       });
     }
 
-    // Auto-fill email if passed in query string: ?email=user@example.com&plan=annual
+    // Query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const emailParam = urlParams.get('email');
     const planParam = urlParams.get('plan');
     const ptxnParam = urlParams.get('_ptxn');
     const statusParam = urlParams.get('status');
-
-    if (emailParam) {
-      checkoutEmailInput.value = emailParam;
-    }
 
     if (planParam === 'monthly') {
       selectPlan('monthly');
@@ -526,7 +560,8 @@
 
     // Check if returning from a successful transaction (via _ptxn or status=success)
     if (statusParam === 'success' || ptxnParam) {
-      handleSuccessfulCheckout(emailParam || '', planParam || 'annual', ptxnParam);
+      const activeEmail = emailParam || (window.OmniAuth?.getUser()?.email) || '';
+      handleSuccessfulCheckout(activeEmail, planParam || 'annual', ptxnParam);
     }
 
     optAnnual.addEventListener('click', () => selectPlan('annual'));
@@ -539,15 +574,77 @@
         optAnnual.querySelector('input').checked = true;
         optMonthly.classList.remove('selected');
         optMonthly.querySelector('input').checked = false;
-        btnPriceLabel.textContent = '($79.00 / yr)';
+        if (btnPriceLabel) btnPriceLabel.textContent = '($79.00 / yr)';
       } else {
         optMonthly.classList.add('selected');
         optMonthly.querySelector('input').checked = true;
         optAnnual.classList.remove('selected');
         optAnnual.querySelector('input').checked = false;
-        btnPriceLabel.textContent = '($9.99 / mo)';
+        if (btnPriceLabel) btnPriceLabel.textContent = '($9.99 / mo)';
+      }
+      renderAuthState();
+    }
+
+    // Auth State Rendering & Guard Logic
+    function renderAuthState() {
+      const user = window.OmniAuth?.getUser();
+
+      if (user && user.email) {
+        if (unauthBox) unauthBox.style.display = 'none';
+        if (authedBox) authedBox.style.display = 'block';
+        if (authedName) authedName.textContent = user.displayName || user.email.split('@')[0];
+        if (authedEmail) authedEmail.textContent = user.email;
+
+        const isPro = user.isPaid || user.tier === 'pro';
+        if (alreadyProNotice) {
+          alreadyProNotice.style.display = isPro ? 'block' : 'none';
+        }
+
+        btnProceed.disabled = false;
+        btnProceed.style.opacity = '1';
+        btnProceed.style.cursor = 'pointer';
+        btnProceed.innerHTML = `<span>🔒 Proceed to Secure Checkout</span> <span id="btnPriceLabel">(${currentPlan === 'annual' ? '$79.00 / yr' : '$9.99 / mo'})</span>`;
+      } else {
+        if (unauthBox) unauthBox.style.display = 'block';
+        if (authedBox) authedBox.style.display = 'none';
+
+        btnProceed.disabled = true;
+        btnProceed.style.opacity = '0.55';
+        btnProceed.style.cursor = 'not-allowed';
+        btnProceed.innerHTML = '<span>🔒 Sign In or Register to Unlock Checkout</span>';
       }
     }
+
+    // Wire Auth modal buttons on checkout page
+    document.getElementById('btnCheckoutOpenSignIn')?.addEventListener('click', () => {
+      window.OmniAuth?.openModal({
+        title: 'Sign In to Upgrade',
+        subtitle: 'Sign in to connect your Pro license and unlimited AI quota.',
+        defaultTab: 'signin',
+        onSuccess: renderAuthState
+      });
+    });
+
+    document.getElementById('btnCheckoutOpenRegister')?.addEventListener('click', () => {
+      window.OmniAuth?.openModal({
+        title: 'Create Account to Upgrade',
+        subtitle: 'Enter your details to register and activate your Pro subscription.',
+        defaultTab: 'register',
+        onSuccess: renderAuthState
+      });
+    });
+
+    document.getElementById('btnCheckoutSwitchAccount')?.addEventListener('click', () => {
+      window.OmniAuth?.openModal({
+        title: 'Switch Account',
+        subtitle: 'Sign into another account to upgrade.',
+        defaultTab: 'signin',
+        onSuccess: renderAuthState
+      });
+    });
+
+    window.addEventListener('omniauth:changed', renderAuthState);
+    renderAuthState();
 
     async function handleSuccessfulCheckout(email, plan, txnId) {
       console.log('🎉 Checkout successful callback received:', { email, plan, txnId });
@@ -586,30 +683,41 @@
         if (txnId) {
           const verifyRes = await fetch(`${BACKEND_URL}/api/paddle/verify-transaction?txnId=${encodeURIComponent(txnId)}&email=${encodeURIComponent(email || '')}`);
           const verifyData = await verifyRes.json();
-          if (verifyData && verifyData.email && (!email || !email.includes('@'))) {
-            const emailEl = document.getElementById('successUserEmail');
-            if (emailEl) emailEl.textContent = verifyData.email;
+          if (verifyData && verifyData.user) {
+            window.OmniAuth?.setUser(verifyData.user);
           }
         } else if (email) {
-          await fetch(`${BACKEND_URL}/api/user/upgrade`, {
+          const upgradeRes = await fetch(`${BACKEND_URL}/api/user/upgrade`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, tier: 'pro', source: 'paddle_checkout' })
           });
+          const upgradeData = await upgradeRes.json();
+          if (upgradeData && upgradeData.user) {
+            window.OmniAuth?.setUser(upgradeData.user);
+          }
         }
       } catch (err) {
         console.warn('Backend upgrade sync error:', err);
       }
     }
 
-    document.getElementById('btnProceedCheckout').addEventListener('click', () => {
-      const email = checkoutEmailInput.value.trim();
-      if (!email || !email.includes('@')) {
-        alert('Please enter your account email to proceed with checkout.');
-        checkoutEmailInput.focus();
+    // Checkout submission (Gated by Auth)
+    btnProceed.addEventListener('click', () => {
+      const user = window.OmniAuth?.getUser();
+      if (!user || !user.email) {
+        window.OmniAuth?.openModal({
+          title: 'Sign In Required',
+          subtitle: 'Please sign in or create an account to proceed with checkout.',
+          defaultTab: 'signin',
+          onSuccess: () => {
+            renderAuthState();
+          }
+        });
         return;
       }
 
+      const email = user.email;
       const priceId = currentPlan === 'annual' ? 'pri_01m56kwezn0khbvq2njpmyyadb' : 'pri_01m56kv3qd1harb3f4c6xsxtwg';
       const successUrl = `${window.location.origin}${window.location.pathname}?status=success&email=${encodeURIComponent(email)}&plan=${encodeURIComponent(currentPlan)}`;
 
