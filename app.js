@@ -300,7 +300,9 @@ function initWebUsageChecker() {
 
     btnCheck.textContent = 'Checking...';
     try {
-      const BACKEND_URL = window.location.hostname === 'localhost' ? 'http://localhost:5050' : 'http://localhost:5050';
+      const BACKEND_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:5050' 
+        : 'https://omnitranslate-backend.onrender.com';
       const res = await fetch(`${BACKEND_URL}/api/user/profile?email=${encodeURIComponent(email)}`);
       const data = await res.json();
 
