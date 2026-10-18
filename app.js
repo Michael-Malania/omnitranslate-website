@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPricingToggle();
   initPlatformTabs();
   initSmoothScroll();
-  initWebUsageChecker();
 });
 
 // 1. Live Translation Playground Scenarios
@@ -280,99 +279,4 @@ function initSmoothScroll() {
   });
 }
 
-// 5. Shared Backend Usage & Account Checker
-function initWebUsageChecker() {
-  const modal = document.getElementById('webUsageModal');
-  const btnOpen = document.getElementById('btnNavCheckUsage');
-  const btnClose = document.getElementById('btnCloseWebUsageModal');
-  const btnCheck = document.getElementById('btnWebCheckAccount');
-  const inputEmail = document.getElementById('inputWebEmail');
-  const resultBox = document.getElementById('webUsageResultBox');
-
-  if (!modal || !btnOpen) return;
-
-  btnOpen.addEventListener('click', () => {
-    modal.classList.remove('hidden');
-    if (inputEmail) inputEmail.focus();
-  });
-
-  btnClose?.addEventListener('click', () => {
-    modal.classList.add('hidden');
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.add('hidden');
-  });
-
-  btnCheck?.addEventListener('click', async () => {
-    const email = inputEmail ? inputEmail.value.trim() : '';
-    if (!email) {
-      alert('Please enter your Google account email');
-      return;
-    }
-
-    btnCheck.textContent = 'Checking...';
-    try {
-      const BACKEND_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-        ? 'http://localhost:5050' 
-        : 'https://omnitranslate-backend.onrender.com';
-      const res = await fetch(`${BACKEND_URL}/api/user/profile?email=${encodeURIComponent(email)}`);
-      const data = await res.json();
-
-      if (data && data.user) {
-        resultBox.classList.remove('hidden');
-        document.getElementById('webResultName').textContent = data.user.displayName || email.split('@')[0];
-        document.getElementById('webResultEmail').textContent = data.user.email;
-        
-        const badgeEl = document.getElementById('webResultBadge');
-        const countEl = document.getElementById('webResultUsageCount');
-        const remEl = document.getElementById('webResultRemaining');
-        const barEl = document.getElementById('webProgressBar');
-        const noteEl = document.getElementById('webResultNote');
-
-        const isDev = data.user.isDeveloper && data.user.developerBypass;
-        const isPaid = data.user.isPaid;
-        const used = data.user.usage?.translationsCount || 0;
-
-        if (isDev) {
-          badgeEl.textContent = 'DEVELOPER UNLIMITED';
-          badgeEl.className = 'plan-badge-pill dev';
-          countEl.textContent = `${used} Translations Used (Dev Bypass Active)`;
-          remEl.textContent = 'Unlimited Quota';
-          barEl.style.width = '100%';
-          noteEl.textContent = 'Developer account detected! All metrics gating, usage counters, and paywalls are disabled.';
-        } else if (isPaid) {
-          badgeEl.textContent = 'PRO SUBSCRIBER';
-          badgeEl.className = 'plan-badge-pill pro';
-          countEl.textContent = `${used} Translations Used`;
-          remEl.textContent = 'Unlimited Quota';
-          barEl.style.width = '100%';
-          noteEl.textContent = 'Active Pro subscriber with unlimited translation streaming.';
-        } else {
-          const rem = Math.max(0, 15 - used);
-          badgeEl.textContent = 'FREE TRIAL';
-          badgeEl.className = 'plan-badge-pill free';
-          countEl.textContent = `${used} / 15 Translations Used`;
-          remEl.textContent = `${rem} Remaining`;
-          barEl.style.width = `${Math.min(100, Math.round((used / 15) * 100))}%`;
-          noteEl.textContent = rem > 0 
-            ? `You have ${rem} free translations left. Upgrade to Pro for unlimited live calls.` 
-            : 'Free quota limit reached (15/15). Upgrade to Pro to continue translating.';
-        }
-      }
-    } catch (e) {
-      alert('Could not reach backend service: ' + e.message);
-    } finally {
-      btnCheck.textContent = 'Check Account Status';
-    }
-  });
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const checkEmail = urlParams.get('checkEmail');
-  if (checkEmail && inputEmail) {
-    inputEmail.value = checkEmail;
-    modal?.classList.remove('hidden');
-    btnCheck?.click();
-  }
-}
 

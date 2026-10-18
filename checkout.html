@@ -486,8 +486,8 @@
       </div>
 
       <div style="display:flex; flex-direction:column; gap:12px;">
-        <a href="/" id="btnCheckStatus" class="btn-checkout-submit" style="text-decoration:none; margin-top:0;">
-          ⚡ Check Account Status on Web
+        <a href="/" id="btnReturnHome" class="btn-checkout-submit" style="text-decoration:none; margin-top:0;">
+          ⚡ Return to Home Overview
         </a>
         <p style="font-size: 12.5px; color: var(--text-secondary); margin: 6px 0 0;">
           💡 Open your <strong>OmniTranslate Desktop App</strong> and sign in with the email above. Your unlimited Pro license will activate automatically!
@@ -676,8 +676,6 @@
       if (email) {
         const emailEl = document.getElementById('successUserEmail');
         if (emailEl) emailEl.textContent = email;
-        const btnStatus = document.getElementById('btnCheckStatus');
-        if (btnStatus) btnStatus.href = `/?checkEmail=${encodeURIComponent(email)}#status`;
       }
 
       const planEl = document.getElementById('successPlanName');
